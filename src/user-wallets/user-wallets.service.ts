@@ -205,7 +205,6 @@ export class UserWalletsService {
       wallet.updatedDate = new Date();
       // wallet.transactions = wallet.transactions
       await this.walletRepository.update(wallet.walletID, wallet)
-
       const updatedWallet = await this.walletRepository.findOne({
         where: {
           walletID: wallet.walletID,

@@ -8,7 +8,7 @@ export class NewProfessionalServiceDTO {
   description?: string;
   category?: string;
   quantity?: string;
-  price?: number;
+  price?: string;
 }
 
 export class CommodityRequestDTO {
@@ -27,7 +27,7 @@ export class UpdateCommodityDTO {
   authToken: string
   id: string;
   name: string
-  price: number;
+  price: string;
   description: string;
   category: string
   tradeStatus: string;
@@ -38,7 +38,7 @@ export class BeautyServiceRequestDTO {
   authToken: string
   catalogID: string;
   name: string
-  price: number;
+  price: string;
   description: string;
   category: string
   tradeStatus: string;
@@ -49,7 +49,7 @@ export class UpdateBeautyServiceDTO {
   authToken: string
   id: string;
   name: string
-  price: number;
+  price: string;
   description: string;
   category: string
   tradeStatus: string;

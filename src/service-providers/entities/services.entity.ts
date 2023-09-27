@@ -15,7 +15,7 @@ export class BeautyService {
     @Column({nullable: true})
     name:string 
     @Column({nullable: true})
-    price : number;
+    price : string;
     @Column({nullable: true})
     description : string; 
     @Column({nullable: true})
@@ -67,7 +67,7 @@ export class BeautyProduct {
     tradeStatus : string; 
     @ManyToOne(() => Catalog, (catalog: Catalog) => catalog.products)
     catalog: Catalog;
-    @OneToMany(() => OrderLine, (order: OrderLine) => order.product)
+    @OneToMany(() => OrderLine, (order: OrderLine) => order.commodity)
     orders: OrderLine[];
     @OneToMany(() => BeautyProductServiceImage, (images: BeautyProductServiceImage) => images.product)
     images: BeautyProductServiceImage[];

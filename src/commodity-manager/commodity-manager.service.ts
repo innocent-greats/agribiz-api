@@ -234,6 +234,7 @@ export class CommodityManagersService {
     newCommodity.price = CommodityRequestDTORequestDTO.price;
     newCommodity.providerID = provider.id;
     newCommodity.portfolioID = portfolio.id;
+    newCommodity.portfolioName = portfolio.name;
     newCommodity.portfolio = portfolio;
     newCommodity.tradeStatus = CommodityRequestDTORequestDTO.tradeStatus;
     (newCommodity.description = CommodityRequestDTORequestDTO.description),

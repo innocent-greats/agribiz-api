@@ -41,7 +41,8 @@ import { CommodityManagerModule } from 'src/commodity-manager/commodity-manager.
       BeautyProductServiceImage,
       ServiceProvider,
       ProfessionalService,
-      ProfessionalServiceImage
+      ProfessionalServiceImage,
+      ServiceProvidersService
     ]),
   ],
   exports: [

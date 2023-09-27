@@ -11,6 +11,9 @@ import { ServiceProvidersService } from 'src/service-providers/service-providers
 import { SocketService } from 'src/sockets-gateway/service';
 import { CommodityManagersService } from 'src/commodity-manager/commodity-manager.service';
 import { CommodityManagerModule } from 'src/commodity-manager/commodity-manager.module';
+import { UsersService } from 'src/users/users.service';
+import { UserWalletsService } from 'src/user-wallets/user-wallets.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -21,6 +24,6 @@ import { CommodityManagerModule } from 'src/commodity-manager/commodity-manager.
     forwardRef(() => ServiceProvidersModule),
     forwardRef(() => CommodityManagerModule),
   ],
-  providers: [SalesOrdersGateway, SalesOrdersService, SocketService, ServiceProvidersService, SearchService, CommodityManagersService, ]
+  providers: [SalesOrdersGateway, SalesOrdersService, SocketService, ServiceProvidersService, SearchService, CommodityManagersService, UsersService, UserWalletsService, JwtService]
 })
 export class SalesOrdersModule {}

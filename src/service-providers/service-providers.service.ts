@@ -68,7 +68,31 @@ export class ServiceProvidersService {
     private searchService: SearchService,
     private salesOrdersService: SalesOrdersService,
   ) {}
+  
+  async fetchProviderAccountByID(
+    id: string,
+  ): Promise<ServiceProvider> {
+    const queryBuilder =
+      this.serviceProviderRepository.createQueryBuilder('serviceProvider');
 
+    // Join with the Customer and Vendor relations
+    queryBuilder
+      .leftJoinAndSelect('serviceProvider.user', 'user')
+      .leftJoinAndSelect('serviceProvider.orders', 'orders')
+      .leftJoinAndSelect('serviceProvider.services', 'services')
+      .leftJoinAndSelect('serviceProvider.catalogs', 'catalogs');
+
+    // Use OR to match either customer or provider userID
+    queryBuilder.where('serviceProvider.id = :id', {
+      id,
+    });
+
+    // Execute the query and return the results
+    const serviceProvider = await queryBuilder.getOne();
+
+    console.log('@serviceProvider', serviceProvider);
+    return serviceProvider;
+  }
   async fetchProviderAccountByAdminID(
     adminUserID: string,
   ): Promise<ServiceProvider> {
@@ -779,22 +803,24 @@ export class ServiceProvidersService {
   }
 
   async  requestBookingOrder(orderDTO: SocketAuthDTO) {
-    let clientData = JSON.parse(orderDTO.order)
-    let providerData = JSON.parse(orderDTO.order)
-    let commodityData = JSON.parse(orderDTO.order)
-    console.log('requestBookingOrder data', commodityData['commodity'])
+    let orderRequest = JSON.parse(orderDTO.order)
+    let orderRequestOrderType = orderRequest['orderType']
+    let orderRequestClientID = orderRequest['clientID']
+    let orderRequestProviderID = orderRequest['providerID']
+    let orderRequestCommodity = orderRequest['commodity']
+    console.log('requestBookingOrder data', orderRequestCommodity['id'])
     let requestOrder: PlaceOrderSocketDTO = {
       orderID: '',
-      commodityID: commodityData['id'],
-      commodityWeight: commodityData['commodityWeight'],
-      orderType: '',
-      clientID: '',
-      providerID: '',
+      commodityID: orderRequestCommodity['id'],
+      commodityWeight: orderRequestCommodity['commodityWeight'],
+      orderType: orderRequestOrderType,
+      clientID: orderRequestClientID,
+      providerID: orderRequestProviderID,
       clientAuth: '',
       orderLines: [],
       order: ''
     }
-    await this.salesOrdersService.requestWarehouseService(requestOrder)
-    return 'order';
+    const order = await this.salesOrdersService.requestWarehouseService(requestOrder)
+    return order;
   }
 }

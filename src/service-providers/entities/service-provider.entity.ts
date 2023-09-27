@@ -96,7 +96,7 @@ export class ServiceProvider {
     @Column({ nullable: true })
     name: string;
     @Column({ nullable: true })
-    price: number;
+    price: string;
     @ManyToOne(() => Catalog, (catalog: Catalog) => catalog.services)
     catalog: Catalog;
     @OneToMany(() => Order, (order: Order) => order.customer)

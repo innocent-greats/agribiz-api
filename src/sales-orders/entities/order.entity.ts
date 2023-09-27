@@ -1,7 +1,7 @@
 import { User } from "src/users/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, Column, ManyToOne, OneToMany } from "typeorm";
-import { ServiceProvider } from "../../service-providers/entities/service-provider.entity";
-import { BeautyService, BeautyProduct } from "../../service-providers/entities/services.entity";
+import { ProfessionalService, ServiceProvider } from "../../service-providers/entities/service-provider.entity";
+import { Commodity } from "src/commodity-manager/entities/commodityentity";
 
 @Entity()
 export class Order {
@@ -48,22 +48,22 @@ export class OrderLine {
   deletedDate: Date;
   @ManyToOne(() => Order, (order: Order) => order.orderLines)
   order: Order;
-  @ManyToOne(() => BeautyService, (beautyService: BeautyService) => beautyService.orders)
-  service: BeautyService;
-  @ManyToOne(() => BeautyProduct, (beautyProduct: BeautyProduct) => beautyProduct.orders)
-  product: BeautyProduct;
+  @ManyToOne(() => ProfessionalService, (service: ProfessionalService) => service.orders)
+  service: ProfessionalService;
+  @ManyToOne(() => Commodity, (commodity: Commodity) => commodity.orders)
+  commodity: Commodity;
   @Column({ nullable: true })
-  beautyProductID: string;
+  commodityID: string;
   @Column({ nullable: true, default: 0 })
-  quantity: number;
+  quantity: string;
   @Column({ nullable: true, default: 0 })
-  weight: number;
+  weight: string;
   @Column({ nullable: true, default: 0 })
-  discount: number;
+  discount: string;
   @Column({ nullable: true, default: 0 })
-  vat: number;
+  vat: string;
   @Column({ nullable: true, default: 0 })
-  amount: number;
+  amount: string;
   @Column({ nullable: true, default: 0 })
-  total: number;
+  total: string;
 }
