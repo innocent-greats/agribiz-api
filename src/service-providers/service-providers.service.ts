@@ -31,6 +31,7 @@ import {
 import { CreateFirebaseAuthUserDTO } from './dto/firebase-account.dto';
 import { UpdateServiceProviderProfileDTO } from './dto/update-service-provider';
 import { SalesOrdersService } from 'src/sales-orders/sales-orders.service';
+import { PlaceOrderSocketDTO, SocketAuthDTO } from 'src/users/dto/create-user.input';
 
 @Injectable()
 export class ServiceProvidersService {
@@ -775,5 +776,25 @@ export class ServiceProvidersService {
 
       return successData;
     }
+  }
+
+  async  requestBookingOrder(orderDTO: SocketAuthDTO) {
+    let clientData = JSON.parse(orderDTO.order)
+    let providerData = JSON.parse(orderDTO.order)
+    let commodityData = JSON.parse(orderDTO.order)
+    console.log('requestBookingOrder data', commodityData['commodity'])
+    let requestOrder: PlaceOrderSocketDTO = {
+      orderID: '',
+      commodityID: commodityData['id'],
+      commodityWeight: commodityData['commodityWeight'],
+      orderType: '',
+      clientID: '',
+      providerID: '',
+      clientAuth: '',
+      orderLines: [],
+      order: ''
+    }
+    await this.salesOrdersService.requestWarehouseService(requestOrder)
+    return 'order';
   }
 }

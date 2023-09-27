@@ -15,7 +15,7 @@ export class CommodityRequestDTO {
   authToken: string
   portfolioID: string;
   name: string
-  price: number;
+  price: string;
   description: string;
   category: string
   tradeStatus: string;

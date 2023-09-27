@@ -32,6 +32,10 @@ export class MessageDTO {
 export class SocketAuthDTO {
   clientAuth: string;
   status: string;
+  order: string
+  bookingType: string;
+  providerID: string;
+  clientID: string;
 }
 
 export class PlaceOrderSocketDTO {

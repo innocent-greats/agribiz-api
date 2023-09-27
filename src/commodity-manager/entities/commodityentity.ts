@@ -15,7 +15,7 @@ export class Commodity {
     @Column({nullable: true})
     name:string 
     @Column({nullable: true})
-    price : number;
+    price : string;
     @Column({nullable: true})
     description : string; 
     @Column({nullable: true})

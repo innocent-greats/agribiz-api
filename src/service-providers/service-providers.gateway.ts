@@ -1,7 +1,7 @@
 import { WebSocketGateway, SubscribeMessage, MessageBody, ConnectedSocket, WebSocketServer, OnGatewayConnection } from '@nestjs/websockets';
 import { ServiceProvidersService } from './service-providers.service';
 import { Server, Socket } from 'socket.io';
-import { SocketAuthDTO, SocketCallDTO } from 'src/users/dto/create-user.input';
+import { PlaceOrderSocketDTO, SocketAuthDTO, SocketCallDTO } from 'src/users/dto/create-user.input';
 import { SocketService } from 'src/sockets-gateway/service';
 import { UsersService } from 'src/users/users.service';
 
@@ -68,28 +68,20 @@ export class ServiceProvidersGateway implements OnGatewayConnection {
     @MessageBody() socketAuthDTO: SocketAuthDTO,
     @ConnectedSocket() socket: Socket,
   ) {
-    console.log("@SubscribeMessage('request-warehouse-service')",socketAuthDTO)
+    // console.log("@SubscribeMessage('request-warehouse-service')",socketAuthDTO)
     // authorize transaction user through call auth token
     const authenticatedClient = await this.socketService.getUserFromAuthToken(
       socketAuthDTO.clientAuth,
     );
     console.log("@authenticatedClient",)
     if (authenticatedClient) {
+
+      let order = await this.serviceProvidersService.requestBookingOrder(socketAuthDTO)
+      console.log("@order",order)
       
-      let providers = await this.serviceProvidersService.getAllWarehouseServiceProviders()
-      console.log("@providers",providers)
-      
-      providers.map(async (provider) => {
-        let matchingObject = await this.socketService.findConnectedUser(provider.user.userID)
-        if (matchingObject) {
-          provider.user.onlineStatus = true;
-        } else {
-          provider.user.onlineStatus = false;
-        }
-      });
-      if (providers) {
+      if (order) {
         // on service call execution success, return the new call acknoledgement
-        return JSON.stringify(providers);
+        return JSON.stringify(order);
       }
     }
   }
